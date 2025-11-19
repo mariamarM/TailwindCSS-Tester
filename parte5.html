@@ -1,0 +1,319 @@
+<!doctype html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Parte 5 — Pseudoclases avanzadas</title>
+  <link href="/src/style.css" rel="stylesheet" />
+</head>
+
+<body class="bg-gray-50 text-gray-800 dark:bg-gray-950 dark:text-gray-100">
+    <header class="max-w-5xl mx-auto p-4 flex items-center justify-between">
+      <a class="text-xl font-bold text-brand" href="/">Tailwind v4.1 — Tutorial</a>
+      <div class="md:hidden">
+        <button id="menu-btn" class="text-gray-600 hover:text-gray-800 focus:outline-none">
+          <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+          </svg>
+        </button>
+      </div>
+      <nav id="menu" class="hidden md:flex text-sm flex-col md:flex-row items-center">
+        <a class="px-2 py-1 md:py-0 hover:underline" href="/index.html">Index</a>
+        <a class="px-2 py-1 md:py-0 hover:underline" href="/parte1.html">Parte 1</a>
+        <a class="px-2 py-1 md:py-0 hover:underline" href="/parte2.html">Parte 2</a>
+        <a class="px-2 py-1 md:py-0 hover:underline" href="/parte3.html">Parte 3</a>
+        <a class="px-2 py-1 md:py-0 hover:underline" href="/parte4.html">Parte 4</a>
+        <a class="px-2 py-1 md:py-0 hover:underline" href="/parte5.html">Parte 5</a>
+        <a class="px-2 py-1 md:py-0 hover:underline" href="/parte6.html">Parte 6</a>
+        <a class="px-2 py-1 md:py-0 hover:underline" href="/parte7.html">Parte 7</a>
+        <a class="px-2 py-1 md:py-0 hover:underline" href="/parte8.html">Parte 8</a>
+        <a class="px-2 py-1 md:py-0 hover:underline" href="/parte9.html">Parte 9</a>
+        <a class="px-2 py-1 md:py-0 hover:underline" href="/parte10.html">Parte 10</a>
+      </nav>
+    </header>
+
+  <main class="max-w-5xl mx-auto p-4 space-y-8">
+    <section>
+      <h1 class="text-3xl font-bold">Parte 5 — Pseudoclases y patrones</h1>
+      <p class="mt-2 text-gray-600 dark:text-gray-700">
+        Crea interacciones sin JS ni selectores complejos usando <code>group</code>, <code>peer</code>,
+        <code>before</code>/<code>after</code>, variantes ARIA y consultas por contenedor.
+      </p>
+    </section>
+
+    <section class="card">
+      <h2 class="card-title">Paso 1 — group + group-hover</h2>
+      <div class="group p-6 bg-white rounded-lg shadow-md hover:shadow-xl transition">
+        <!-- Título: se vuelve azul cuando el grupo entra en hover -->
+        <h3 class="text-xl font-semibold group-hover:text-blue-600 transition">Título de la tarjeta</h3>
+        <p class="mt-2 text-gray-600 dark:text-gray-700">Este párrafo no cambia con hover.</p>
+        <button class="mt-4 px-3 py-2 bg-gray-200 group-hover:bg-blue-500 group-hover:text-white rounded-md transition">
+          Ver más
+        </button>
+      </div>
+      <p class="mt-3 text-xs text-gray-600 dark:text-gray-700">Coloca <code>group</code> en el contenedor y usa
+        <code>group-hover:</code> en los hijos para reaccionar al estado del padre.</p>
+    </section>
+
+    <section class="card">
+      <h2 class="card-title">Paso 2 — peer + validación</h2>
+      <div>
+        <input type="email" class="peer block w-full p-2 border border-gray-300 rounded-md
+                   invalid:border-red-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          placeholder="Introduce tu email" required />
+        <p class="mt-1 text-sm text-red-600 invisible peer-invalid:visible ">
+          Por favor introduce un email válido.
+        </p>
+      </div>
+      <p class="mt-3 text-xs text-gray-600 dark:text-gray-700">El estado <code>invalid:</code> del input con clase
+        <code>peer</code> controla la visibilidad del mensaje mediante <code>peer-invalid:visible</code>.</p>
+    </section>
+
+    <section class="card">
+      <h2 class="card-title">Paso 3 — before / after</h2>
+      <button class="relative px-4 py-2 bg-indigo-600 text-white rounded-md overflow-hidden
+                 before:absolute before:inset-0 before:-translate-x-full
+                 before:bg-indigo-400 before:transition
+                 hover:before:translate-x-0">
+        Botón dinámico
+      </button>
+      <p class="mt-3 text-xs text-gray-600 dark:text-gray-700">El pseudoelemento <code>before:</code> crea una capa
+        animable dentro del botón.</p>
+    </section>
+
+    <section class="card">
+      <h2 class="card-title">Paso 4 — Estado ARIA</h2>
+      <button aria-expanded="false" class="px-4 py-2 bg-gray-800 text-white rounded-md
+                 aria-expanded:bg-blue-600 transition">
+        Más información
+      </button>
+      <p class="mt-3 text-xs text-gray-600 dark:text-gray-700">Usa atributos ARIA para variar estilos según
+        accesibilidad: <code>aria-expanded:</code>, <code>aria-checked:</code>, etc.</p>
+    </section>
+
+    <section class="card">
+      <h2 class="card-title">Paso 5 — @container (consultas por contenedor)</h2>
+      <div class="mx-auto p-6 @container bg-white dark:bg-slate-900 rounded-lg">
+        <div class="@sm:flex @sm:gap-6">
+          <aside class="w-full @sm:w-1/3 bg-gray-100 dark:bg-slate-800 p-4 rounded-md">Sidebar</aside>
+          <main class="flex-1 bg-white dark:bg-slate-900 p-4 rounded-md shadow">Contenido principal</main>
+        </div>
+      </div>
+      <p class="mt-3 text-xs text-gray-600 dark:text-gray-700">Las variantes <code>@sm:</code>, <code>@md:</code> se
+        basan en el ancho del contenedor con <code>@container</code>, no del viewport.</p>
+    </section>
+
+   <section class="card">
+      <h2 class="card-title">Ejercicio guiado — Tarjeta de suscripción interactiva</h2>
+      <p class="text-sm text-gray-600 dark:text-gray-700">
+        En este ejercicio vas a crear un pequeño formulario dentro de una tarjeta visual. Usarás varias características de Tailwind CSS para conseguir efectos de interacción sin necesidad de JavaScript.<br>
+        La tarjeta cambiará de estilo en función de estados como <strong>hover</strong>, <strong>invalid</strong> y <strong>aria-expanded</strong>, y además reorganizará su layout en función del ancho del propio componente (consultas por contenedor).
+      </p>
+
+      <h3 class="mt-4 font-semibold text-gray-700 dark:text-gray-800">Objetivos del ejercicio</h3>
+      <ul class="list-disc list-inside text-sm text-gray-600 dark:text-gray-700 space-y-1 mt-2">
+        <li>Aprender a usar <code>group</code> para que los elementos hijos reaccionen al estado <code>hover</code> del contenedor.</li>
+        <li>Validar emails con HTML5 y mostrar mensajes de error con ayuda de <code>peer</code> + <code>peer-invalid:</code>.</li>
+        <li>Estilizar un botón en función del atributo <code>aria-expanded</code> sin necesidad de escribir JavaScript.</li>
+        <li>Controlar el layout de la tarjeta según su propio ancho usando <code>@container</code> + <code>@md:</code>.</li>
+      </ul>
+
+      <h3 class="mt-4 font-semibold text-gray-700 dark:text-gray-800">Instrucciones paso a paso</h3>
+      <ol class="list-decimal list-inside text-sm text-gray-600 dark:text-gray-700 space-y-1 mt-3">
+        <li>
+          Envuelve toda la tarjeta dentro de un elemento con clase <code>group</code>. Esto te permite animar algunas partes internas usando clases como <code>group-hover:</code>.
+        </li>
+        <li>
+          Crea un <code>&lt;input type="email"&gt;</code> con clase <code>peer</code>. Si el email está mal formateado, el input activará el estado <code>invalid:</code>, y podrás mostrar un mensaje de error usando <code>peer-invalid:visible</code>.
+        </li>
+        <li>
+          Añade un botón con el atributo <code>aria-expanded="false"</code>. Usa clases como <code>aria-expanded:text-brand</code> para estilizarlo según el valor del atributo.
+        </li>
+        <li>
+          Añade la utilidad <code>@container</code> al contenedor principal de la tarjeta. Luego usa <code>@md:</code> para cambiar a un layout horizontal cuando el ancho mínimo del contenedor sea suficiente (sin necesitar <code>@media</code> del viewport).
+        </li>
+      </ol>
+
+      <div class="mt-6 border border-dashed border-gray-300 dark:border-gray-700 rounded-lg p-6 bg-gray-50/50 dark:bg-gray-900/30">
+        <div class="@container group w-full max-w-lg mx-auto rounded-2xl bg-white dark:bg-slate-900 
+                   border border-gray-200 dark:border-gray-700 p-6 shadow-sm transition-all duration-300
+                   hover:border-brand/40 hover:shadow-md">
+          
+          <!-- Header con icono y badge -->
+          <div class="flex items-start gap-4 mb-6">
+            <div class="flex-shrink-0 w-12 h-12 bg-gradient-to-br from-brand/10 to-brand/20 rounded-xl flex items-center justify-center">
+              <svg class="w-6 h-6 text-brand" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+              </svg>
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center justify-between">
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white truncate">Newsletter Semanal</h3>
+                <span class="inline-flex items-center gap-1 rounded-full bg-brand/10 text-brand px-2.5 py-1 text-xs font-medium
+                             transition-all duration-300 group-hover:bg-brand group-hover:text-white flex-shrink-0 ml-2">
+                  Nuevo
+                </span>
+              </div>
+              <p class="mt-1 text-sm text-gray-600 dark:text-gray-400">
+                Recibe las últimas actualizaciones directamente en tu email
+              </p>
+            </div>
+          </div>
+
+          <div class="space-y-3 @md:flex @md:items-start @md:gap-3 @md:space-y-0">
+            <div class="flex-1 min-w-0">
+              <div class="relative">
+                <input type="email"
+                  class="peer w-full rounded-lg border border-gray-300 dark:border-gray-600 bg-white dark:bg-slate-800 
+                           px-4 py-2.5 text-sm placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-brand focus:border-transparent
+                           invalid:border-red-500 dark:invalid:border-red-400 transition-colors pr-10"
+                  placeholder="tu@email.com" 
+                  required />
+                <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                  <svg class="w-4 h-4 text-gray-400 peer-invalid:text-red-500 peer-focus:text-brand transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.207" />
+                  </svg>
+                </div>
+              </div>
+              
+              <p class="mt-1.5 text-xs text-red-600 dark:text-red-400 h-4 transition-all duration-200
+                        opacity-0 peer-invalid:opacity-100 transform translate-y-1 peer-invalid:translate-y-0">
+                <span class="inline-flex items-center gap-1">
+                  <svg class="w-3 h-3 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2v-3a1 1 0 00-1-1H9z" clip-rule="evenodd" />
+                  </svg>
+                  Revisa el formato del correo
+                </span>
+              </p>
+            </div>
+
+            <button class="w-full @md:w-auto btn btn-brand px-5 py-2.5 text-sm font-medium whitespace-nowrap
+                         transition-all duration-200 hover:scale-105 active:scale-95">
+              Suscribirme
+            </button>
+          </div>
+
+          <div class="mt-6 pt-4 border-t border-gray-100 dark:border-gray-800">
+            <button aria-expanded="false"
+              class="group/aria inline-flex items-center gap-2 text-xs font-medium text-gray-500 dark:text-gray-500
+                         hover:text-gray-700 dark:hover:text-gray-300 transition-all duration-200
+                         aria-expanded:text-brand aria-expanded:font-semibold">
+              <svg class="w-3 h-3 transition-transform duration-200 aria-expanded:rotate-180" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+              </svg>
+              Detalles de privacidad
+              <span class="w-1 h-1 rounded-full bg-current opacity-0 group-hover/aria:opacity-100 transition-opacity"></span>
+            </button>
+            
+            <div class="mt-2 text-xs text-gray-500 dark:text-gray-400 aria-expanded:block hidden 
+                       transition-all duration-200 transform origin-top">
+              <div class="bg-gray-50 dark:bg-slate-800/50 rounded-lg p-3 border border-gray-200 dark:border-gray-700">
+                <p class="leading-relaxed">
+                  <strong class="text-gray-700 dark:text-gray-300">Tu privacidad es importante:</strong><br>
+                  Solo usamos tu email para enviarte nuestro newsletter. No compartimos tu información con terceros y puedes darte de baja en cualquier momento.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <h3 class="mt-8 font-semibold text-gray-700 dark:text-gray-800">Para comprobar que funciona correctamente:</h3>
+      <ul class="list-disc list-inside text-sm text-gray-600 dark:text-gray-700 space-y-1 mt-2">
+        <li>Pasa el ratón por encima de la tarjeta: el badge "Nuevo" debería cambiar de color automáticamente gracias a <code>group-hover:</code>.</li>
+        <li>Introduce un email incorrecto: el mensaje de error debería aparecer gracias a <code>peer-invalid:visible</code>.</li>
+        <li>Reduce o aumenta el ancho de la tarjeta: observa cómo cambia entre disposición vertical y horizontal con <code>@md:</code> y <code>@container</code>.</li>
+        <li>Comprueba cómo cambia el botón si modificas <code>aria-expanded</code> de "false" a "true" manualmente en el HTML.</li>
+      </ul>
+
+      <div class="mt-6 p-5 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-xl border border-blue-200 dark:border-blue-800">
+        <h4 class="font-semibold text-blue-800 dark:text-blue-300 text-sm mb-4 flex items-center gap-2">
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+          </svg>
+          Cómo probar cada funcionalidad:
+        </h4>
+        <div class="grid gap-3 text-sm text-blue-700 dark:text-blue-400">
+          <div class="flex items-center gap-3 p-2 bg-white/50 dark:bg-blue-900/20 rounded-lg">
+            <div class="flex-shrink-0 w-6 h-6 bg-blue-500 text-white rounded-full text-xs flex items-center justify-center font-bold">1</div>
+            <div>
+              <strong>Group hover:</strong> Pasa el cursor sobre cualquier parte de la tarjeta para ver cambios en el badge
+            </div>
+          </div>
+          <div class="flex items-center gap-3 p-2 bg-white/50 dark:bg-blue-900/20 rounded-lg">
+            <div class="flex-shrink-0 w-6 h-6 bg-blue-500 text-white rounded-full text-xs flex items-center justify-center font-bold">2</div>
+            <div>
+              <strong>Peer invalid:</strong> Escribe "email-invalido" en el campo para ver el mensaje de error
+            </div>
+          </div>
+          <div class="flex items-center gap-3 p-2 bg-white/50 dark:bg-blue-900/20 rounded-lg">
+            <div class="flex-shrink-0 w-6 h-6 bg-blue-500 text-white rounded-full text-xs flex items-center justify-center font-bold">3</div>
+            <div>
+              <strong>Container queries:</strong> Cambia el ancho del contenedor para ver el layout responsive
+            </div>
+          </div>
+          <div class="flex items-center gap-3 p-2 bg-white/50 dark:bg-blue-900/20 rounded-lg">
+            <div class="flex-shrink-0 w-6 h-6 bg-blue-500 text-white rounded-full text-xs flex items-center justify-center font-bold">4</div>
+            <div>
+              <strong>ARIA expanded:</strong> Haz clic en "Detalles de privacidad" para ver la animación
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const menuBtn = document.getElementById('menu-btn');
+    const menu = document.getElementById('menu');
+
+    if (menuBtn) {
+      menuBtn.addEventListener('click', () => {
+        menu.classList.toggle('hidden');
+      });
+    }
+
+    const currentPath = window.location.pathname;
+    const navLinks = document.querySelectorAll('nav a');
+
+    navLinks.forEach(link => {
+      if (link.getAttribute('href') === currentPath) {
+        link.classList.add('font-bold', 'text-brand');
+      }
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const privacyButton = document.querySelector('button[aria-expanded]');
+      const expandableContent = document.querySelector('.aria-expanded\\:block');
+      
+      if (privacyButton && expandableContent) {
+        privacyButton.addEventListener('click', function() {
+          const isExpanded = this.getAttribute('aria-expanded') === 'true';
+          this.setAttribute('aria-expanded', !isExpanded);
+          
+          if (!isExpanded) {
+            expandableContent.classList.remove('hidden');
+            expandableContent.classList.add('block');
+            setTimeout(() => {
+              expandableContent.style.opacity = '1';
+              expandableContent.style.transform = 'scaleY(1)';
+            }, 10);
+          } else {
+            expandableContent.style.opacity = '0';
+            expandableContent.style.transform = 'scaleY(0.8)';
+            setTimeout(() => {
+              expandableContent.classList.remove('block');
+              expandableContent.classList.add('hidden');
+            }, 200);
+          }
+        });
+
+        expandableContent.style.opacity = '0';
+        expandableContent.style.transform = 'scaleY(0.8)';
+        expandableContent.style.transition = 'opacity 0.2s ease, transform 0.2s ease';
+      }
+    });
+  </script>
+</body>
+</html>

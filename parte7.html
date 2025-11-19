@@ -1,0 +1,421 @@
+﻿<!doctype html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Parte 7 — Modo oscuro y temas</title>
+
+  <link href="/src/style.css" rel="stylesheet" />
+
+  <!-- Aplica el tema antes de que se pinte el documento (evita parpadeo) -->
+  <script>
+    (function () {
+      const saved = localStorage.getItem('theme'); // 'dark' | 'light' | null (sistema)
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+      const isDark = saved === 'dark' || (!saved && prefersDark);
+      document.documentElement.classList.toggle('dark', isDark);
+    })();
+  </script>
+</head>
+
+<body class="bg-white p-8 text-gray-800 transition-colors dark:bg-gray-900 dark:text-gray-200">
+  <header class="mx-auto flex max-w-5xl items-center justify-between">
+    <a class="text-xl font-bold text-brand" href="/">Tailwind v4.1 — Tutorial</a>
+    <nav class="text-sm">
+      <a class="px-2 hover:underline" href="/parte1.html">Parte 1</a>
+      <a class="px-2 hover:underline" href="/parte2.html">Parte 2</a>
+      <a class="px-2 hover:underline" href="/parte3.html">Parte 3</a>
+      <a class="px-2 hover:underline" href="/parte4.html">Parte 4</a>
+      <a class="px-2 hover:underline" href="/parte5.html">Parte 5</a>
+      <a class="px-2 hover:underline" href="/parte6.html">Parte 6</a>
+      <a class="px-2 hover:underline" href="/parte7.html">Parte 7</a>
+      <a class="px-2 hover:underline" href="/parte8.html">Parte 8</a>
+      <a class="px-2 hover:underline" href="/parte9.html">Parte 9</a>
+      <a class="px-2 hover:underline" href="/parte10.html">Parte 10</a>
+    </nav>
+  </header>
+
+  <main class="mx-auto mt-8 max-w-5xl space-y-8">
+    <section class="card">
+      <h1 class="text-3xl font-bold">Parte 7 — Modo oscuro</h1>
+      <p class="mt-2 text-gray-700 dark:text-gray-300">
+        Aprende a activar el modo oscuro con variantes, a respetar la preferencia del sistema y a preparar controles
+        para que cada persona elija su tema.
+      </p>
+    </section>
+
+    <section class="card">
+      <h2 class="card-title">Visión general</h2>
+      <p class="text-sm text-gray-700 dark:text-gray-300">
+        El modo oscuro ya es una opción nativa en los sistemas operativos. Tailwind facilita mantener dos apariencias en
+        paralelo mediante la variante <code>dark:</code>, que reescribe utilidades cuando <code>.dark</code> está
+        presente en <code>&lt;html&gt;</code>.
+      </p>
+      <p class="mt-3 text-sm text-gray-700 dark:text-gray-300">
+        Define los estilos claros por defecto y añade las variantes oscuras sólo donde sea necesario. El resultado
+        mantiene la coherencia visual sin duplicar hojas de estilo.
+      </p>
+      
+      <div class="mt-4 grid gap-4 md:grid-cols-2">
+        <div>
+          <h3 class="font-semibold text-sm mb-3">Tema claro</h3>
+          <div class="rounded-lg bg-white px-6 py-8 shadow-xl ring-1 ring-gray-900/5">
+            <div>
+              <span class="inline-flex items-center justify-center rounded-md bg-indigo-500 p-2 shadow-lg">
+                <svg class="h-6 w-6 stroke-white" fill="none" viewBox="0 0 24 24">
+                  <path
+                    d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                    stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                </svg>
+              </span>
+            </div>
+            <h3 class="mt-5 text-base font-medium tracking-tight text-gray-900">Escritura en cualquier ángulo</h3>
+            <p class="mt-2 text-sm text-gray-500">
+              El Zero Gravity Pen conserva el contraste sobre superficies claras y puede escribir incluso boca abajo.
+            </p>
+          </div>
+        </div>
+        <div>
+          <h3 class="font-semibold text-sm mb-3">Tema oscuro</h3>
+          <div class="rounded-lg bg-gray-800 px-6 py-8 shadow-xl ring-1 ring-white/10">
+            <div>
+              <span class="inline-flex items-center justify-center rounded-md bg-indigo-500 p-2 shadow-lg">
+                <svg class="h-6 w-6 stroke-white" fill="none" viewBox="0 0 24 24">
+                  <path
+                    d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"
+                    stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+                </svg>
+              </span>
+            </div>
+            <h3 class="mt-5 text-base font-medium tracking-tight text-white">Escritura en cualquier ángulo</h3>
+            <p class="mt-2 text-sm text-gray-400">
+              Con el tema oscuro activado, sólo cambian los colores necesarios para mantener un contraste accesible.
+            </p>
+          </div>
+        </div>
+      </div>
+      <pre class="mt-4 overflow-x-auto rounded bg-gray-100 p-4 text-xs dark:bg-gray-900"><code>&lt;div class="bg-white dark:bg-gray-800 rounded-lg px-6 py-8 ring shadow-xl ring-gray-900/5"&gt;...&lt;/div&gt;</code></pre>
+    </section>
+
+    <section class="card">
+      <h2 class="card-title">Compatibilidad con el tema del sistema</h2>
+      <p class="text-sm text-gray-700 dark:text-gray-300">
+        Puedes ofrecer un control manual (claro/oscuro) y una opción "Sistema" que respete
+        <code>prefers-color-scheme</code>.
+        Guarda la preferencia en <code>localStorage</code> y actualiza la clase <code>.dark</code> según corresponda.
+      </p>
+      
+      <div class="mt-4 flex flex-wrap gap-3">
+        <button onclick="setTheme('light')"
+          class="rounded bg-gray-200 px-4 py-2 font-semibold text-gray-900 transition active:scale-95 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-100 dark:hover:bg-gray-600">
+          Claro
+        </button>
+        <button onclick="setTheme('dark')"
+          class="rounded bg-indigo-500 px-4 py-2 font-semibold text-white transition active:scale-95 hover:bg-indigo-600">
+          Oscuro
+        </button>
+        <button onclick="setTheme('system')"
+          class="rounded border border-gray-300 px-4 py-2 font-semibold text-gray-900 transition active:scale-95 dark:border-gray-600 dark:text-gray-100">
+          Sistema
+        </button>
+      </div>
+      
+      <p class="mt-3 text-xs text-gray-600 dark:text-gray-400">
+        El script inferior encapsula la lógica: aplica el tema al cargar, reacciona a los botones y escucha cambios del
+        sistema cuando no hay preferencia guardada.
+      </p>
+    </section>
+
+    <section class="card">
+      <h2 class="card-title">Ejercicio guiado — Toggle de tema accesible con persistencia + preview sin JS</h2>
+
+      <p class="text-sm text-gray-600 dark:text-gray-300">
+        Construye un selector de tema accesible con tres opciones: Claro, Oscuro y Sistema.
+        La elección debe guardarse en <code>localStorage</code> y aplicarse al documento
+        añadiendo o quitando la clase <code>dark</code> en <code>document.documentElement</code>.
+        Además, incluye un área de "preview local" que cambie de claro/oscuro únicamente con utilidades CSS
+        usando <code>peer</code> (sin JavaScript).
+      </p>
+
+      <div class="mt-3 rounded-md border border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-slate-900/50 p-3">
+        <h3 class="font-semibold text-sm text-gray-800 dark:text-gray-200">Requisitos</h3>
+        <ul class="mt-2 list-disc list-inside text-sm text-gray-600 dark:text-gray-300 space-y-1">
+          <li>Tres opciones exclusivas (radio buttons): Claro, Oscuro, Sistema.</li>
+          <li>Persistencia en <code>localStorage</code> con clave <code>theme</code> (<code>light</code> |
+            <code>dark</code> | <code>system</code>).</li>
+          <li>Sincronización del tema en <code>&lt;html&gt;</code> mediante clase <code>dark</code>.</li>
+          <li>Escuchar cambios del SO con <code>prefers-color-scheme</code> cuando la elección sea "Sistema".</li>
+          <li>Preview "local" que alterna con <code>peer</code> sin JS adicional.</li>
+          <li>Accesible: usar <code>&lt;fieldset&gt;</code>, <code>&lt;legend&gt;</code> y etiquetas <code>for</code>.
+          </li>
+        </ul>
+      </div>
+    </section>
+
+    <div class="grid gap-6 md:grid-cols-2">
+      
+      <section class="card h-full flex flex-col">
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">🎯 Selector de Tema</h3>
+        
+        <fieldset class="space-y-4 flex-1">
+          <legend class="text-sm font-medium text-gray-800 dark:text-gray-200 mb-2">
+            Preferencia de tema
+            <span class="text-xs text-gray-500 dark:text-gray-400 block font-normal mt-1">
+              Tu elección se guarda automáticamente
+            </span>
+          </legend>
+
+          <div class="flex flex-col gap-3 text-sm">
+            <div class="flex-1">
+              <input class="sr-only peer" type="radio" name="theme-selector" id="theme-light" value="light" />
+              <label for="theme-light" class="flex items-center justify-center gap-2 cursor-pointer rounded-lg border-2 border-gray-300 px-4 py-3
+                          text-gray-700 dark:text-gray-200 dark:border-gray-600
+                          hover:border-brand/50 hover:bg-brand/5
+                          peer-checked:border-brand peer-checked:bg-brand/10 peer-checked:text-brand
+                          focus:outline-none focus:ring-2 focus:ring-brand/50 transition-all duration-200">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                        d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+                </svg>
+                <span>Claro</span>
+              </label>
+            </div>
+
+            <div class="flex-1">
+              <input class="sr-only peer" type="radio" name="theme-selector" id="theme-dark" value="dark" />
+              <label for="theme-dark" class="flex items-center justify-center gap-2 cursor-pointer rounded-lg border-2 border-gray-300 px-4 py-3
+                          text-gray-700 dark:text-gray-200 dark:border-gray-600
+                          hover:border-brand/50 hover:bg-brand/5
+                          peer-checked:border-brand peer-checked:bg-brand/10 peer-checked:text-brand
+                          focus:outline-none focus:ring-2 focus:ring-brand/50 transition-all duration-200">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                        d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                </svg>
+                <span>Oscuro</span>
+              </label>
+            </div>
+
+            <div class="flex-1">
+              <input class="sr-only peer" type="radio" name="theme-selector" id="theme-system" value="system" />
+              <label for="theme-system" class="flex items-center justify-center gap-2 cursor-pointer rounded-lg border-2 border-gray-300 px-4 py-3
+                          text-gray-700 dark:text-gray-200 dark:border-gray-600
+                          hover:border-brand/50 hover:bg-brand/5
+                          peer-checked:border-brand peer-checked:bg-brand/10 peer-checked:text-brand
+                          focus:outline-none focus:ring-2 focus:ring-brand/50 transition-all duration-200">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                        d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"/>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/>
+                </svg>
+                <span>Sistema</span>
+              </label>
+            </div>
+          </div>
+
+          <p class="text-xs text-gray-500 dark:text-gray-400 flex items-center gap-2 mt-4">
+            <svg class="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            La opción "Sistema" sigue tu preferencia del sistema operativo
+          </p>
+        </fieldset>
+
+        <div class="mt-4 p-3 bg-gray-50 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
+          <p class="text-sm text-gray-700 dark:text-gray-300">
+            <strong>Tema actual:</strong> 
+            <span id="current-theme-display" class="text-brand font-medium">Cargando...</span>
+          </p>
+          <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">
+            Clase en &lt;html&gt;: <code id="html-class-display" class="bg-gray-200 dark:bg-gray-700 px-1 rounded">document.documentElement.classList</code>
+          </p>
+        </div>
+      </section>
+
+      <section class="card h-full flex flex-col">
+        <h3 class="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">🔍 Preview Local</h3>
+        
+        <div class="flex-1 space-y-4">
+          <div class="flex items-center gap-3 text-sm">
+            <input type="checkbox" id="preview-toggle" class="peer sr-only" />
+            <label for="preview-toggle"
+              class="flex items-center gap-2 cursor-pointer rounded-full border-2 border-gray-300 px-4 py-2 dark:border-gray-600
+                     hover:border-brand/50 hover:bg-brand/5
+                     peer-checked:border-brand peer-checked:bg-brand/10 peer-checked:text-brand
+                     transition-all duration-200">
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                      d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"/>
+              </svg>
+              <span>Simular tema oscuro</span>
+            </label>
+          </div>
+
+          <div class="space-y-3 flex-1">
+            <!-- Tarjeta 1 -->
+            <div class="rounded-xl bg-white p-4 text-gray-900 shadow-lg border border-gray-200 transition-all duration-300
+                      dark:bg-gray-800 dark:text-gray-100 dark:border-gray-700
+                      peer-checked:bg-gray-900 peer-checked:text-gray-100 peer-checked:border-gray-600
+                      hover:shadow-xl">
+              <div class="flex items-center gap-3 mb-3">
+                <div class="w-8 h-8 bg-gradient-to-br from-blue-500 to-purple-600 rounded-lg flex items-center justify-center">
+                  <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                  </svg>
+                </div>
+                <div>
+                  <p class="text-xs font-semibold uppercase tracking-wide text-brand peer-checked:text-blue-400">Design</p>
+                  <h3 class="text-base font-bold">Sistema de Componentes</h3>
+                </div>
+              </div>
+              <p class="text-sm text-gray-600 dark:text-gray-300 peer-checked:text-gray-300">
+                Biblioteca completa de componentes adaptables al tema activo.
+              </p>
+            </div>
+
+            <div class="rounded-xl bg-white p-4 text-gray-900 shadow-lg border border-gray-200 transition-all duration-300
+                      dark:bg-gray-800 dark:text-gray-100 dark:border-gray-700
+                      peer-checked:bg-gray-900 peer-checked:text-gray-100 peer-checked:border-gray-600
+                      hover:shadow-xl">
+              <div class="flex items-center gap-3 mb-3">
+                <div class="w-8 h-8 bg-gradient-to-br from-green-500 to-emerald-600 rounded-lg flex items-center justify-center">
+                  <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+                  </svg>
+                </div>
+                <div>
+                  <p class="text-xs font-semibold uppercase tracking-wide text-brand peer-checked:text-green-400">Security</p>
+                  <h3 class="text-base font-bold">Autenticación Segura</h3>
+                </div>
+              </div>
+              <p class="text-sm text-gray-600 dark:text-gray-300 peer-checked:text-gray-300">
+                Sistema con soporte para múltiples proveedores y temas.
+              </p>
+            </div>
+          </div>
+
+          <div class="p-3 bg-amber-50 dark:bg-amber-900/20 rounded-lg border border-amber-200 dark:border-amber-800">
+            <p class="text-xs text-amber-700 dark:text-amber-400">
+              <strong>💡 ¿Cómo funciona?</strong><br>
+              Usa <code>peer-checked:</code> para cambiar estilos sin JavaScript.
+            </p>
+          </div>
+        </div>
+      </section>
+    </div>
+
+   
+  </main>
+
+  <script>
+    (function () {
+      const STORAGE_KEY = 'theme';
+      const root = document.documentElement;
+      let systemThemeListener = null;
+
+      function getSystemTheme() {
+        return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+      }
+
+      function applySystemTheme() {
+        const systemTheme = getSystemTheme();
+        root.classList.toggle('dark', systemTheme === 'dark');
+        return systemTheme;
+      }
+
+      function setupSystemThemeListener() {
+        if (systemThemeListener) {
+          systemThemeListener.removeEventListener('change', handleSystemThemeChange);
+        }
+        
+        systemThemeListener = window.matchMedia('(prefers-color-scheme: dark)');
+        systemThemeListener.addEventListener('change', handleSystemThemeChange);
+      }
+
+      function handleSystemThemeChange(e) {
+        const savedTheme = localStorage.getItem(STORAGE_KEY);
+        if (savedTheme === 'system') {
+          root.classList.toggle('dark', e.matches);
+          updateThemeDisplay();
+        }
+      }
+
+      function setTheme(value) {
+        localStorage.setItem(STORAGE_KEY, value);
+
+        if (systemThemeListener) {
+          systemThemeListener.removeEventListener('change', handleSystemThemeChange);
+          systemThemeListener = null;
+        }
+
+        if (value === 'light') {
+          root.classList.remove('dark');
+        } else if (value === 'dark') {
+          root.classList.add('dark');
+        } else {
+          applySystemTheme();
+          setupSystemThemeListener();
+        }
+
+        updateRadioButtons(value);
+        updateThemeDisplay();
+      }
+
+      function updateRadioButtons(value) {
+        const radios = document.querySelectorAll('input[name="theme-selector"]');
+        radios.forEach(radio => {
+          radio.checked = radio.value === value;
+        });
+      }
+
+      function updateThemeDisplay() {
+        const currentTheme = localStorage.getItem(STORAGE_KEY) || 'system';
+        const displayElement = document.getElementById('current-theme-display');
+        const htmlClassElement = document.getElementById('html-class-display');
+        
+        if (displayElement) {
+          let displayText = '';
+          switch (currentTheme) {
+            case 'light':
+              displayText = 'Claro 🌞';
+              break;
+            case 'dark':
+              displayText = 'Oscuro 🌙';
+              break;
+            case 'system':
+              displayText = `Sistema (${getSystemTheme() === 'dark' ? 'Oscuro' : 'Claro'}) ⚙️`;
+              break;
+          }
+          displayElement.textContent = displayText;
+        }
+        
+        if (htmlClassElement) {
+          const hasDarkClass = root.classList.contains('dark');
+          htmlClassElement.textContent = hasDarkClass ? 'class="dark"' : 'class=""';
+        }
+      }
+
+      function initTheme() {
+        const savedTheme = localStorage.getItem(STORAGE_KEY) || 'system';
+        setTheme(savedTheme);
+      }
+
+      document.addEventListener('DOMContentLoaded', function() {
+        const radios = document.querySelectorAll('input[name="theme-selector"]');
+        radios.forEach(radio => {
+          radio.addEventListener('change', (e) => {
+            setTheme(e.target.value);
+          });
+        });
+        
+        initTheme();
+      });
+
+      window.setTheme = setTheme;
+      window.getCurrentTheme = () => localStorage.getItem(STORAGE_KEY) || 'system';
+
+    })();
+  </script>
+</body>
+</html>

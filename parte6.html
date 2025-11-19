@@ -1,0 +1,566 @@
+
+<!doctype html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Parte 6 — Styling with utility classes</title>
+  <link href="/src/style.css" rel="stylesheet" />
+</head>
+
+<body class="bg-gray-50 text-gray-800 dark:bg-gray-950 dark:text-gray-100">
+  <header class="max-w-5xl mx-auto p-4 flex items-center justify-between">
+    <a class="text-xl font-bold text-brand" href="/">Tailwind v4.1 — Tutorial</a>
+    <div class="md:hidden">
+      <button id="menu-btn" class="text-gray-600 hover:text-gray-800 focus:outline-none">
+        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+        </svg>
+      </button>
+    </div>
+    <nav id="menu" class="hidden md:flex text-sm flex-col md:flex-row items-center">
+      <a class="px-2 py-1 md:py-0 hover:underline" href="/index.html">Index</a>
+      <a class="px-2 py-1 md:py-0 hover:underline" href="/parte1.html">Parte 1</a>
+      <a class="px-2 py-1 md:py-0 hover:underline" href="/parte2.html">Parte 2</a>
+      <a class="px-2 py-1 md:py-0 hover:underline" href="/parte3.html">Parte 3</a>
+      <a class="px-2 py-1 md:py-0 hover:underline" href="/parte4.html">Parte 4</a>
+      <a class="px-2 py-1 md:py-0 hover:underline" href="/parte5.html">Parte 5</a>
+      <a class="px-2 py-1 md:py-0 hover:underline" href="/parte6.html">Parte 6</a>
+      <a class="px-2 py-1 md:py-0 hover:underline" href="/parte7.html">Parte 7</a>
+      <a class="px-2 py-1 md:py-0 hover:underline" href="/parte8.html">Parte 8</a>
+      <a class="px-2 py-1 md:py-0 hover:underline" href="/parte9.html">Parte 9</a>
+      <a class="px-2 py-1 md:py-0 hover:underline" href="/parte10.html">Parte 10</a>
+    </nav>
+  </header>
+
+  <main class="max-w-5xl mx-auto p-4 space-y-8">
+    <section>
+      <h1 class="text-3xl font-bold">Parte 6 — Styling with utility classes</h1>
+      <p class="mt-2 text-gray-600 dark:text-gray-300">Building complex components from a constrained set of primitive
+        utilities.</p>
+    </section>
+
+    <section class="card">
+      <h2 class="card-title">Overview</h2>
+      <p class="text-sm text-gray-700 dark:text-gray-800">You style things by combining many single-purpose classes
+        directly in your markup.</p>
+      <div class="mt-4">
+        <div
+          class="mx-auto flex max-w-sm items-center gap-x-4 rounded-xl bg-white p-6 shadow-lg outline outline-black/5 dark:bg-slate-800 dark:shadow-none dark:-outline-offset-1 dark:outline-white/10">
+          <img class="size-12 shrink-0"
+            src="https://mundoanimecritico.home.blog/wp-content/uploads/2019/12/52e32-princesa_mononoke_moro.png"
+            alt="ChitChat Logo" />
+          <div>
+            <div class="text-xl font-medium text-black dark:text-white">ChitChat</div>
+            <p class="text-gray-500 dark:text-gray-400">You have a new message!</p>
+          </div>
+        </div>
+      </div>
+      <pre class="mt-4 p-4 bg-gray-100 dark:bg-gray-900 rounded text-xs overflow-x-auto"><code>&lt;div class=&quot;mx-auto flex max-w-sm items-center gap-x-4 rounded-xl bg-white p-6 shadow-lg outline outline-black/5 dark:bg-slate-800 dark:shadow-none dark:-outline-offset-1 dark:outline-white/10&quot;&gt;
+  &lt;img class=&quot;size-12 shrink-0&quot; src=&quot;/img/logo.svg&quot; alt=&quot;ChitChat Logo&quot; /&gt;
+  &lt;div&gt;
+    &lt;div class=&quot;text-xl font-medium text-black dark:text-white&quot;&gt;ChitChat&lt;/div&gt;
+    &lt;p class=&quot;text-gray-500 dark:text-gray-400&quot;&gt;You have a new message!&lt;/p&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+      <ul class="mt-4 list-disc list-inside text-sm text-gray-700 dark:text-gray-700 space-y-1">
+        <li>Layout: <code>flex</code>, <code>shrink-0</code>, <code>p-6</code></li>
+        <li>Width/center: <code>max-w-sm</code>, <code>mx-auto</code></li>
+        <li>Appearance: <code>bg-white</code>, <code>rounded-xl</code>, <code>shadow-lg</code></li>
+        <li>Size: <code>size-12</code> for the logo</li>
+        <li>Spacing: <code>gap-x-4</code></li>
+        <li>Typography: <code>text-xl</code>, <code>text-black</code>, <code>font-medium</code></li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2 class="card-title">Why not just use inline styles?</h2>
+      <ul class="list-disc list-inside text-sm text-gray-700 dark:text-gray-700 space-y-1">
+        <li>Designing with constraints vs. magic numbers</li>
+        <li>Hover/focus states with variants</li>
+        <li>Responsive design with breakpoints</li>
+      </ul>
+      <div class="mt-4">
+        <div class="flex flex-col gap-2 p-8 sm:flex-row sm:items-center sm:gap-6 sm:py-4">
+          <img class="mx-auto block h-24 rounded-full sm:mx-0 sm:shrink-0" src="https://picsum.photos/192" alt="" />
+          <div class="space-y-2 text-center sm:text-left">
+            <div class="space-y-0.5">
+              <p class="text-lg font-semibold text-black dark:text-white">Erin Lindford</p>
+              <p class="font-medium text-gray-500 dark:text-gray-400">Product Engineer</p>
+            </div>
+            <button
+              class="border border-purple-200 text-purple-600 hover:border-transparent hover:bg-purple-600 hover:text-white active:bg-purple-700 rounded-md px-3 py-2 transition">Message</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2 class="card-title">Thinking in utility classes — states</h2>
+      <p class="text-sm text-gray-700 dark:text-gray-700">Style hover/focus by prefixing utilities with variants.</p>
+      <p class="mt-2 text-sm text-gray-700 dark:text-gray-700">Hover over this button to see the background color change
+      </p>
+      <button class="mt-2 bg-sky-500 hover:bg-sky-700 text-white rounded-md px-3 py-2 transition">Save changes</button>
+      <pre class="mt-4 p-4 bg-gray-100 dark:bg-gray-900 rounded text-xs overflow-x-auto"><code>.hover\:bg-sky-700 {
+  &amp;:hover {
+    background-color: var(--color-sky-700);
+  }
+}</code></pre>
+      <pre
+        class="mt-3 p-4 bg-gray-100 dark:bg-gray-900 rounded text-xs overflow-x-auto"><code>&lt;button class=&quot;bg-sky-500 disabled:hover:bg-sky-500 ...&quot;&gt;Save changes&lt;/button&gt;</code></pre>
+    </section>
+
+    <section class="card">
+      <h2 class="card-title">Media queries and breakpoints</h2>
+      <div class="grid grid-cols-2 sm:grid-cols-3 gap-2 text-center text-sm">
+        <div class="rounded bg-white dark:bg-slate-800 p-2">01</div>
+        <div class="rounded bg-white dark:bg-slate-800 p-2">02</div>
+        <div class="rounded bg-white dark:bg-slate-800 p-2">03</div>
+        <div class="rounded bg-white dark:bg-slate-800 p-2">04</div>
+        <div class="rounded bg-white dark:bg-slate-800 p-2">05</div>
+        <div class="rounded bg-white dark:bg-slate-800 p-2">06</div>
+      </div>
+      <pre class="mt-4 p-4 bg-gray-100 dark:bg-gray-900 rounded text-xs overflow-x-auto"><code>.sm\:grid-cols-3 {
+  @media (width &gt;= 40rem) {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}</code></pre>
+    </section>
+
+    <section class="card">
+      <h2 class="card-title">Targeting dark mode</h2>
+      <div class="bg-white dark:bg-gray-800 rounded-lg px-6 py-8 ring shadow-xl ring-gray-900/5">
+        <div>
+          <span class="inline-flex items-center justify-center rounded-md bg-indigo-500 p-2 shadow-lg">
+            <svg class="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v18m9-9H3" />
+            </svg>
+          </span>
+        </div>
+        <h3 class="text-gray-900 dark:text-white mt-5 text-base font-medium tracking-tight">Writes upside-down</h3>
+        <p class="text-gray-500 dark:text-gray-400 mt-2 text-sm">The Zero Gravity Pen can be used to write in any
+          orientation, including upside-down.</p>
+      </div>
+      <pre class="mt-4 p-4 bg-gray-100 dark:bg-gray-900 rounded text-xs overflow-x-auto"><code>.dark\:bg-gray-800 {
+  @media (prefers-color-scheme: dark) {
+    background-color: var(--color-gray-800);
+  }
+}</code></pre>
+    </section>
+
+    <section class="card">
+      <h2 class="card-title">Class composition</h2>
+      <div class="blur-sm grayscale transition hover:blur-0 hover:grayscale-0 rounded overflow-hidden">
+        <img src="https://picsum.photos/800/200" alt="Demo" />
+      </div>
+      <pre class="mt-4 p-4 bg-gray-100 dark:bg-gray-900 rounded text-xs overflow-x-auto"><code>.blur-sm {
+  --tw-blur: blur(var(--blur-sm));
+  filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-grayscale,);
+}
+.grayscale {
+  --tw-grayscale: grayscale(100%);
+  filter: var(--tw-blur,) var(--tw-brightness,) var(--tw-grayscale,);
+}</code></pre>
+    </section>
+
+    <section class="card">
+      <h2 class="card-title">Using arbitrary values</h2>
+      <div class="flex flex-wrap items-center gap-3">
+        <button class="bg-[#316ff6] text-white rounded-md px-3 py-2 shadow transition hover:brightness-95">Sign in with
+          Facebook</button>
+        <span class="text-xs text-gray-600 dark:text-gray-300">bg-[#316ff6]</span>
+      </div>
+
+      <div class="mt-4 overflow-x-auto">
+        <div class="min-w-[40rem] grid grid-cols-[24rem_2.5rem_minmax(0,1fr)] gap-2">
+          <div class="rounded bg-sky-100 p-2 text-sky-900">Col 1 (24rem)</div>
+          <div class="rounded bg-violet-100 p-2 text-violet-900">Col 2 (2.5rem)</div>
+          <div class="rounded bg-emerald-100 p-2 text-emerald-900">Col 3 (minmax)</div>
+        </div>
+      </div>
+
+      <div
+        class="mt-4 max-h-[calc(30vh-(--spacing(6)))] overflow-y-auto rounded border border-gray-200 dark:border-slate-700 bg-white dark:bg-slate-900 p-3 text-sm">
+        <p class="text-gray-600 dark:text-gray-700">Scroll dentro de un max-h con calc(…)</p>
+        <div class="space-y-2 mt-2">
+          <p>• Línea 1</p>
+          <p>• Línea 2</p>
+          <p>• Línea 3</p>
+          <p>• Línea 4</p>
+          <p>• Línea 5</p>
+          <p>• Línea 6</p>
+          <p>• Línea 7</p>
+          <p>• Línea 8</p>
+          <p>• Línea 9</p>
+          <p>• Línea 10</p>
+        </div>
+      </div>
+
+      <div class="mt-4 [--gutter-width:1rem] lg:[--gutter-width:2rem] grid grid-cols-2 gap-[var(--gutter-width)]">
+        <div class="rounded bg-amber-100 p-3 text-amber-900">Gutter = 1rem (2rem en lg)</div>
+        <div class="rounded bg-amber-100 p-3 text-amber-900">Con variable personalizada</div>
+      </div>
+
+      <pre class="mt-4 p-4 bg-gray-100 dark:bg-gray-900 rounded text-xs overflow-x-auto"><code>&lt;button class=&quot;bg-[#316ff6] ...&quot;&gt;Sign in with Facebook&lt;/button&gt;
+&lt;div class=&quot;grid grid-cols-[24rem_2.5rem_minmax(0,1fr)]&quot;&gt;&lt;/div&gt;
+&lt;div class=&quot;max-h-[calc(100dvh-(--spacing(6)))]&quot;&gt;&lt;/div&gt;
+&lt;div class=&quot;[--gutter-width:1rem] lg:[--gutter-width:2rem]&quot;&gt;&lt;/div&gt;</code></pre>
+    </section>
+
+    <section class="card">
+      <h2 class="card-title">How does this even work?</h2>
+      <div class="flex flex-wrap items-center gap-3">
+        <button class="font-bold px-4 py-2 rounded-md text-base bg-blue-500 text-white hover:bg-blue-600 transition">MD
+          button</button>
+        <button class="font-bold px-5 py-3 rounded-lg text-lg bg-blue-500 text-white hover:bg-blue-600 transition">LG
+          button</button>
+      </div>
+      <pre class="p-4 bg-gray-100 dark:bg-gray-900 rounded text-xs overflow-x-auto"><code>// Button.jsx
+export default function Button({ size, children }) {
+  let sizeClasses = {
+    md: "px-4 py-2 rounded-md text-base",
+    lg: "px-5 py-3 rounded-lg text-lg",
+  }[size];
+  return (
+    &lt;button type=&quot;button&quot; className={`font-bold ${sizeClasses}`}&gt;
+      {children}
+    &lt;/button&gt;
+  );
+}</code></pre>
+      <p class="mt-3 text-sm text-gray-700 dark:text-gray-700">Tailwind scans your files for class-like strings and
+        generates only what you use, including arbitrary values.</p>
+    </section>
+
+    <section class="card">
+      <h2 class="card-title">Complex selectors</h2>
+      <button data-current
+        class="px-3 py-2 rounded-md bg-gray-200 text-gray-900 dark:lg:data-current:hover:bg-indigo-600 transition">
+        Hover me (dark + ≥1024px)
+      </button>
+      <a href="#" class="group mt-3 block rounded-lg p-3 bg-white dark:bg-slate-800">
+        <span class="group-hover:underline text-blue-600">Read more…</span>
+      </a>
+      <div class="mt-3 [&>[data-active]+span]:text-blue-600 bg-white dark:bg-slate-900 p-3 rounded">
+        <span data-active>•</span>
+        <span>Second span turns blue</span>
+      </div>
+      <pre class="p-4 bg-gray-100 dark:bg-gray-900 rounded text-xs overflow-x-auto"><code>&lt;button class=&quot;dark:lg:data-current:hover:bg-indigo-600 ...&quot;&gt;&lt;/button&gt;
+@media (prefers-color-scheme: dark) and (width &gt;= 64rem) {
+  button[data-current]:hover { background-color: var(--color-indigo-600); }
+}
+
+&lt;a href=&quot;#&quot; class=&quot;group rounded-lg p-8&quot;&gt;
+  &lt;span class=&quot;group-hover:underline&quot;&gt;Read more…&lt;/span&gt;
+&lt;/a&gt;
+@media (hover: hover) {
+  a:hover span { text-decoration-line: underline; }
+}
+
+&lt;div class=&quot;[&amp;&gt;[data-active]+span]:text-blue-600 ...&quot;&gt;
+  &lt;span data-active&gt;&lt;!-- ... --&gt;&lt;/span&gt;
+  &lt;span&gt;This text will be blue&lt;/span&gt;
+&lt;/div&gt;
+div &gt; [data-active] + span { color: var(--color-blue-600); }</code></pre>
+    </section>
+
+    <section class="card">
+      <h2 class="card-title">When to use inline styles</h2>
+      <div class="flex flex-wrap items-center gap-3">
+        <button style="background-color:#10b981;color:#fff" class="rounded-md px-3 py-1.5 font-medium">Inline
+          styles</button>
+        <button style="--bg-color:#2563eb;--bg-color-hover:#1d4ed8;--text-color:#fff"
+          class="bg-[--bg-color] text-[--text-color] hover:bg-[--bg-color-hover] rounded-md px-3 py-1.5 font-medium transition">CSS
+          vars + utilities</button>
+      </div>
+      <pre class="p-4 bg-gray-100 dark:bg-gray-900 rounded text-xs overflow-x-auto"><code>// branded-button.jsx
+export function BrandedButton({ buttonColor, textColor, children }) {
+  return (
+    &lt;button
+      style={{ backgroundColor: buttonColor, color: textColor }}
+      className=&quot;rounded-md px-3 py-1.5 font-medium&quot;
+    &gt;
+      {children}
+    &lt;/button&gt;
+  );
+}
+
+// Using CSS vars + utilities
+export function BrandedButton({ buttonColor, buttonColorHover, textColor, children }) {
+  return (
+    &lt;button
+      style={{
+        "--bg-color": buttonColor,
+        "--bg-color-hover": buttonColorHover,
+        "--text-color": textColor,
+      }}
+      className=&quot;bg-[--bg-color] text-[--text-color] hover:bg-[--bg-color-hover] rounded-md px-3 py-1.5 font-medium&quot;
+    &gt;
+      {children}
+    &lt;/button&gt;
+  );
+}</code></pre>
+    </section>
+
+    <section class="card">
+      <h2 class="card-title">Managing duplication</h2>
+      <p class="text-sm text-gray-700 dark:text-gray-700">Loops, multi-cursor editing, components, or small custom CSS.
+      </p>
+      <div class="mt-3">
+        <div class="flex items-center space-x-2 text-base">
+          <h4 class="font-semibold text-slate-900 dark:text-white">Contributors</h4>
+          <span
+            class="bg-slate-100 px-2 py-1 text-xs font-semibold text-slate-700 dark:bg-slate-700 dark:text-slate-100 rounded">204</span>
+        </div>
+        <div class="mt-3 flex -space-x-2 overflow-hidden">
+          <img class="inline-block h-12 w-12 rounded-full ring-2 ring-white"
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRtGh0jALQ605z0yMxDwuAvDMPjfrBU7J06BA&s" alt="" />
+          <img class="inline-block h-12 w-12 rounded-full ring-2 ring-white"
+            src="https://static.wikia.nocookie.net/disney/images/9/96/Studio_Ghibli_Logo.jpg" alt="" />
+          <img class="inline-block h-12 w-12 rounded-full ring-2 ring-white"
+            src="https://upload.wikimedia.org/wikipedia/en/thumb/c/ca/Studio_Ghibli_logo.svg/1200px-Studio_Ghibli_logo.svg.png"
+            alt="" />
+        </div>
+        <div class="mt-3 text-sm font-medium">
+          <a href="#" class="text-blue-500">+ 198 others</a>
+        </div>
+      </div>
+      <pre class="mt-3 p-4 bg-gray-100 dark:bg-gray-900 rounded text-xs overflow-x-auto"><code>@import &quot;tailwindcss&quot;;
+@layer components {
+  .btn-primary {
+    border-radius: calc(infinity * 1px);
+    background-color: var(--color-violet-500);
+    padding-inline: --spacing(5);
+    padding-block: --spacing(2);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-white);
+    box-shadow: var(--shadow-md);
+    &amp;:hover { @media (hover: hover) { background-color: var(--color-violet-700); } }
+  }
+}
+
+&lt;button class=&quot;btn-primary&quot;&gt;Save changes&lt;/button&gt;</code></pre>
+    </section>
+
+    <section class="card">
+      <h2 class="card-title">Managing style conflicts</h2>
+      <div class="rounded p-3 text-sm text-white bg-teal-500 bg-red-500! inline-block">Red wins via !important</div>
+      <pre class="p-4 bg-gray-100 dark:bg-gray-900 rounded text-xs overflow-x-auto"><code>&lt;div class=&quot;grid flex&quot;&gt;&lt;/div&gt;
+.flex { display: flex; }
+.grid { display: grid; }
+
+// Prefer conditional classes
+export function Example({ gridLayout }) {
+  return &lt;div className={gridLayout ? &quot;grid&quot; : &quot;flex&quot;}&gt;&lt;/div&gt;;
+}
+
+&lt;div class=&quot;bg-teal-500 bg-red-500!&quot;&gt;&lt;/div&gt;
+.bg-red-500\! { background-color: var(--color-red-500) !important; }
+
+/* Important flag for whole Tailwind build */
+@import &quot;tailwindcss&quot; important;
+
+/* Prefix all utilities */
+@import &quot;tailwindcss&quot; prefix(tw);
+/* Then use e.g. tw:text-red-500 */
+</code></pre>
+    </section>
+
+   <section class="card">
+      <h2 class="card-title">Ejercicio guiado — Componente de ficha de producto solo con utilidades</h2>
+
+      <p class="text-sm text-gray-600 dark:text-gray-700">
+        Construye una ficha de producto 100% con utilidades de Tailwind (sin CSS adicional) que sea responsiva,
+        accesible y coherente con el sistema de diseño. Debe incluir imagen o placeholder, badges de estado,
+        título, descripción breve y dos llamadas a la acción. El layout debe adaptarse en función del ancho
+        disponible y mantener una jerarquía visual clara.
+      </p>
+
+      <div class="mt-3 rounded-md border border-gray-200 dark:border-gray-800 bg-white/50 dark:bg-slate-900/50 p-3">
+        <h3 class="font-semibold text-sm text-gray-800 dark:text-gray-800">Requisitos mínimos</h3>
+        <ul class="mt-2 list-disc list-inside text-sm text-gray-600 dark:text-gray-700 space-y-1">
+          <li>Diseño en una o dos columnas usando utilidades de <code>grid</code> o <code>flex</code>.</li>
+          <li>Placeholder de imagen cuadrado con degradado o patrón simple.</li>
+          <li>Badges con estados diferenciados (por ejemplo, categoría y disponibilidad).</li>
+          <li>Jerarquía tipográfica clara con tamaños como <code>text-xs</code>, <code>text-sm</code>,
+            <code>text-2xl</code>.</li>
+          <li>Dos CTAs: primario sólido y secundario con borde o estilo neutro.</li>
+          <li>Compatibilidad con modo oscuro usando <code>dark:</code>.</li>
+          <li>Accesibilidad: roles/labels adecuados y foco visible con <code>focus:</code>.</li>
+        </ul>
+      </div>
+
+      <h3 class="mt-4 font-semibold text-sm text-gray-800 dark:text-gray-800">Pasos guiados</h3>
+      <ul class="list-decimal list-inside text-sm text-gray-600 dark:text-gray-500 space-y-1 mt-2">
+        <li>Envuelve el componente en un contenedor con tarjeta: borde, radio, sombra ligera y padding.</li>
+        <li>Crea el layout base en una columna y añade una variante responsiva a dos columnas usando
+          <code>grid</code> con <code>gap</code>. Un patrón útil es <code>md:grid-cols-[auto,1fr]</code>.
+        </li>
+        <li>Genera un placeholder de imagen cuadrado con <code>size-24</code> o similar y un degradado
+          con <code>bg-gradient-to-br</code> aprovechando <code>from-brand/20</code>.</li>
+        <li>Añade una línea de badges: uno para la categoría y otro para el estado del producto
+          (por ejemplo, "Nuevo" o "En stock"). Usa utilidades de fondo, borde y tipografía.</li>
+        <li>Escribe un título con <code>text-2xl</code> y un párrafo con <code>text-sm</code> para descripción breve.
+        </li>
+        <li>Coloca dos botones: el primario con <code>btn btn-brand</code> y el secundario con borde
+          y texto neutro. Añade <code>focus:outline-none</code> y <code>focus:ring-2</code> con un color coherente.</li>
+        <li>Revisa el contraste en claro/oscuro y ajusta con utilidades <code>dark:</code>.</li>
+      </ul>
+
+      <div class="mt-6 rounded-lg border border-dashed border-gray-300 dark:border-gray-700 p-6 bg-gray-50/50 dark:bg-gray-900/30">
+        <article class="@container w-full max-w-2xl mx-auto bg-white dark:bg-slate-900 rounded-2xl shadow-lg border border-gray-200 dark:border-slate-700 p-6 transition-all duration-300 hover:shadow-xl"
+          role="region" aria-labelledby="product-title">
+          
+          <div class="grid gap-6 @md:grid-cols-[auto,1fr] @md:gap-8 items-start">
+            
+            <div class="relative">
+              <figure class="size-32 @md:size-40 rounded-xl bg-gradient-to-br from-brand/20 via-brand/10 to-purple-200/30 shadow-inner flex items-center justify-center"
+                role="img" aria-label="Placeholder de imagen del producto">
+                <svg class="w-12 h-12 text-brand/40" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+              </figure>
+              
+              <div class="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full shadow-lg">
+                -20%
+              </div>
+            </div>
+
+            <div class="space-y-4 min-w-0">
+              
+              <div class="flex flex-wrap items-center gap-2">
+                <span class="inline-flex items-center px-3 py-1 rounded-full bg-brand/10 text-brand text-xs font-semibold uppercase tracking-wide">
+                  UI Kit
+                </span>
+                <span class="inline-flex items-center px-3 py-1 rounded-full border border-emerald-300 bg-emerald-50 text-emerald-700 dark:bg-emerald-900/20 dark:border-emerald-700 dark:text-emerald-300 text-xs font-semibold">
+                  <span class="w-1.5 h-1.5 bg-emerald-500 rounded-full mr-1.5"></span>
+                  En stock
+                </span>
+              </div>
+
+              <div>
+                <h3 id="product-title" class="text-2xl @md:text-3xl font-bold text-gray-900 dark:text-white leading-tight">
+                  Component Pack Pro
+                </h3>
+                <p class="mt-2 text-sm text-gray-600 dark:text-gray-400 leading-relaxed">
+                  Colección completa de componentes UI modernos y accesibles. Incluye más de 50 elementos 
+                  listos para usar en tus proyectos. Totalmente responsive y compatible con modo oscuro.
+                </p>
+              </div>
+
+              <div class="flex items-baseline gap-3">
+                <span class="text-2xl font-bold text-gray-900 dark:text-white">$89.99</span>
+                <span class="text-sm text-gray-500 dark:text-gray-400 line-through">$112.49</span>
+              </div>
+
+              <ul class="space-y-1.5 text-sm text-gray-600 dark:text-gray-300">
+                <li class="flex items-center gap-2">
+                  <svg class="w-4 h-4 text-emerald-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                  </svg>
+                  <span>Más de 50 componentes personalizables</span>
+                </li>
+                <li class="flex items-center gap-2">
+                  <svg class="w-4 h-4 text-emerald-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                  </svg>
+                  <span>Compatibilidad total con modo oscuro</span>
+                </li>
+                <li class="flex items-center gap-2">
+                  <svg class="w-4 h-4 text-emerald-500 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
+                  </svg>
+                  <span>Actualizaciones gratuitas por 1 año</span>
+                </li>
+              </ul>
+
+              <div class="flex flex-col @md:flex-row gap-3 pt-2">
+                <button class="btn btn-brand flex-1 justify-center focus:outline-none focus:ring-2 focus:ring-brand/60 focus:ring-offset-2 
+                         hover:scale-105 active:scale-95 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                  type="button" aria-label="Comprar Component Pack Pro">
+                  <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                  </svg>
+                  Comprar ahora
+                </button>
+                
+                <button class="btn border border-gray-300 text-gray-700 dark:text-gray-200 bg-white dark:bg-slate-800 
+                         hover:bg-gray-50 dark:hover:bg-slate-700 focus:outline-none focus:ring-2 focus:ring-gray-400 
+                         focus:ring-offset-2 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                  type="button" aria-label="Ver vista previa del producto">
+                  <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                  </svg>
+                  Vista previa
+                </button>
+              </div>
+
+              <div class="flex flex-wrap items-center gap-3 text-xs text-gray-500 dark:text-gray-400 pt-2">
+                <span class="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-gray-100 dark:bg-slate-800">
+                  <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                  </svg>
+                  Licencia comercial
+                </span>
+                <span class="inline-flex items-center gap-1 px-2 py-1 rounded-md bg-gray-100 dark:bg-slate-800">
+                  <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  Actualizaciones 1 año
+                </span>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+
+    
+
+    
+
+      <div class="mt-6 p-4 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+        <h4 class="font-semibold text-blue-800 dark:text-blue-300 text-sm mb-3">🧪 Cómo probar el componente:</h4>
+        <div class="grid gap-2 text-sm text-blue-700 dark:text-blue-400">
+          <div class="flex items-center gap-2">
+            <span class="font-mono text-xs bg-blue-200 dark:bg-blue-700 px-2 py-1 rounded">1</span>
+            <span><strong>Responsive:</strong> Cambia el tamaño de la ventana para ver el layout adaptativo</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="font-mono text-xs bg-blue-200 dark:bg-blue-700 px-2 py-1 rounded">2</span>
+            <span><strong>Focus:</strong> Navega con Tab para ver los anillos de foco</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="font-mono text-xs bg-blue-200 dark:bg-blue-700 px-2 py-1 rounded">3</span>
+            <span><strong>Modo oscuro:</strong> Activa el modo oscuro para ver los ajustes automáticos</span>
+          </div>
+          <div class="flex items-center gap-2">
+            <span class="font-mono text-xs bg-blue-200 dark:bg-blue-700 px-2 py-1 rounded">4</span>
+            <span><strong>Hover:</strong> Pasa el cursor sobre botones para ver las transiciones</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const menuBtn = document.getElementById('menu-btn');
+    const menu = document.getElementById('menu');
+
+    if (menuBtn) {
+      menuBtn.addEventListener('click', () => {
+        menu.classList.toggle('hidden');
+      });
+    }
+
+    const currentPath = window.location.pathname;
+    const navLinks = document.querySelectorAll('nav a');
+
+    navLinks.forEach(link => {
+      if (link.getAttribute('href') === currentPath) {
+        link.classList.add('font-bold', 'text-brand');
+      }
+    });
+  </script>
+</body>
+</html>

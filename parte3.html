@@ -1,0 +1,265 @@
+﻿<!doctype html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Parte 3 — Variantes</title>
+  <link href="/src/style.css" rel="stylesheet" />
+</head>
+
+<body class="bg-gray-50 text-gray-800 dark:bg-gray-950 dark:text-gray-100">
+  <header class="max-w-5xl mx-auto p-4 flex items-center justify-between">
+    <a class="text-xl font-bold text-indigo-600" href="/">Tailwind v4.1 — Tutorial</a>
+    <div class="md:hidden">
+      <button id="menu-btn" class="text-gray-600 hover:text-gray-800 focus:outline-none">
+        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7" />
+        </svg>
+      </button>
+    </div>
+    <nav id="menu" class="hidden md:flex text-sm flex-col md:flex-row items-center">
+      <a class="px-2 py-1 md:py-0 hover:underline" href="/index.html">Index</a>
+      <a class="px-2 py-1 md:py-0 hover:underline" href="/parte1.html">Parte 1</a>
+      <a class="px-2 py-1 md:py-0 hover:underline" href="/parte2.html">Parte 2</a>
+      <a class="px-2 py-1 md:py-0 hover:underline" href="/parte3.html">Parte 3</a>
+      <a class="px-2 py-1 md:py-0 hover:underline" href="/parte4.html">Parte 4</a>
+      <a class="px-2 py-1 md:py-0 hover:underline" href="/parte5.html">Parte 5</a>
+      <a class="px-2 py-1 md:py-0 hover:underline" href="/parte6.html">Parte 6</a>
+      <a class="px-2 py-1 md:py-0 hover:underline" href="/parte7.html">Parte 7</a>
+      <a class="px-2 py-1 md:py-0 hover:underline" href="/parte8.html">Parte 8</a>
+      <a class="px-2 py-1 md:py-0 hover:underline" href="/parte9.html">Parte 9</a>
+      <a class="px-2 py-1 md:py-0 hover:underline" href="/parte10.html">Parte 10</a>
+    </nav>
+  </header>
+
+  <main class="max-w-5xl mx-auto p-4 space-y-8">
+    <section>
+      <h1 class="text-3xl font-bold">Parte 3 — Variantes clave</h1>
+      <p class="mt-2 text-gray-600 dark:text-gray-300">
+        Aplica utilidades bajo condiciones: hover, focus, active, modo oscuro y breakpoints responsive.
+      </p>
+    </section>
+
+    <section class="card">
+      <h2 class="card-title">Paso 1 — Estados de interacción</h2>
+      <button class="px-4 py-2 rounded-md bg-blue-500 text-white
+                 hover:bg-blue-600        /* intensifica al pasar el cursor */
+                 focus:outline-none focus:ring-2 focus:ring-blue-400 /* ring accesible */
+                 active:translate-y-px    /* microfeedback al hacer clic */
+                 transition">
+        Guardar cambios
+      </button>
+      <p class="mt-3 text-xs text-gray-600 dark:text-gray-500">
+        Explicación: <code>hover:</code> y <code>focus:</code> no requieren CSS aparte; Tailwind genera las reglas.
+        <code>transition</code> suaviza los cambios; el <code>ring</code> reemplaza el outline por uno accesible.
+      </p>
+    </section>
+
+    <section class="card">
+      <h2 class="card-title">Paso 2 — Responsive (breakpoints)</h2>
+      <button class="px-3 py-2 rounded-md bg-green-600 text-white
+                 sm:px-4 sm:py-3        /* tablets y más */
+                 lg:px-6 lg:py-4        /* pantallas grandes */
+                 hover:bg-green-700 transition">
+        Comprar ahora
+      </button>
+      <p class="mt-3 text-xs text-gray-600 dark:text-gray-500">
+        Móvil-first: sin prefijo = móviles; <code>sm:</code> (≥640px), <code>lg:</code> (≥1024px) sobreescriben tamaño.
+      </p>
+    </section>
+
+    <section class="card">
+      <h2 class="card-title">Paso 3 — Modo oscuro</h2>
+      <div class="p-6 bg-white text-gray-800 dark:bg-gray-900 dark:text-gray-200 rounded-lg">
+        <h3 class="text-xl font-bold">Título</h3>
+        <p class="mt-2">Cambia estilos con <code>dark:</code>.</p>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2 class="card-title">Paso 4 — Pila de variantes</h2>
+      <button class="bg-purple-500 text-white px-4 py-2 rounded-md
+                 hover:bg-purple-600
+                 dark:hover:bg-purple-400   /* hover diferente en dark */
+                 md:active:translate-y-px   /* feedback en pantallas medianas+ */
+                 transition">
+        Enviar
+      </button>
+    </section>
+
+    <section class="card">
+      <h2 class="card-title">Paso 5 — Valores arbitrarios</h2>
+      <p class="text-sm text-gray-600 dark:text-gray-700">
+        Cuando Tailwind no ofrece una utilidad con el valor exacto, puedes abrir corchetes y escribir ese valor tal
+        cual:
+        colores sueltos (<code>bg-[#2d3748]</code>), porcentajes precisos (<code>w-[90%]</code>) o cálculos como
+        <code>max-h-[calc(100dvh-50px)]</code> para restar la altura de una cabecera fija.
+      </p>
+      <div class="h-[150px] w-[90%] bg-[#2d3748] rounded"></div>
+      <p class="mt-2 text-sm text-gray-600 dark:text-gray-700">
+        Útiles para colores puntuales o cálculos complejos: <code>max-h-[calc(100dvh-50px)]</code>.
+      </p>
+    </section>
+    
+    <section class="card">
+      <h2 class="card-title">Ejercicio guiado — Tarjeta con variantes y breakpoints</h2>
+      <p class="text-sm text-gray-600 dark:text-gray-800">
+        Practica cómo encadenar variantes (<code>hover</code>, <code>focus-visible</code>, <code>active</code>,
+        <code>dark</code> y <code>sm/md</code>) para dar feedback accesible y responsive.
+      </p>
+
+      <ol class="list-decimal list-inside text-sm text-gray-600 dark:text-gray-800 space-y-1 mt-3">
+        <li>Haz que la tarjeta cambie de columna a fila con <code>md:flex-row</code> y usa <code>gap-*</code>
+          consistentes.</li>
+        <li>Añade <code>hover:</code> y <code>dark:hover:</code> al borde/fondo, y <code>focus-visible:</code> en el CTA
+          para accesibilidad.</li>
+        <li>Prueba microinteracciones: <code>active:-translate-y-0.5</code> (siempre) y <code>md:active:scale-95</code>
+          (solo en pantallas medianas+).</li>
+      </ol>
+
+      <div class="mt-4 rounded-lg border border-dashed border-gray-300 dark:border-gray-700 p-4">
+        <article class="flex flex-col md:flex-row items-center gap-6 p-6 bg-white dark:bg-slate-800 rounded-xl border-2 border-gray-200 dark:border-slate-700 transition-all duration-300 cursor-pointer hover:border-brand dark:hover:border-brand hover:shadow-lg hover:-translate-y-1 active:-translate-y-0.5 group">
+          <div class="flex items-center justify-center">
+            <svg class="w-12 h-12 text-brand dark:text-brand-light" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                    d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+            </svg>
+          </div>
+
+          <div class="flex-1 text-center md:text-left">
+            <p class="text-xs font-semibold tracking-wide text-brand dark:text-brand-light uppercase">Estado beta</p>
+            <h3 class="mt-2 text-xl font-bold group-hover:text-brand dark:group-hover:text-brand-light transition-colors dark:text-white">Dashboard adaptable</h3>
+            <p class="mt-2 text-sm text-gray-600 dark:text-slate-400">
+              Combina <code>sm:</code>/<code>md:</code> con estados de interacción para lograr feedback claro en
+              cualquier tamaño.
+            </p>
+          </div>
+
+          <a href="#" role="button" class="btn btn-primary md:active:scale-95 focus-visible:outline-2 focus-visible:outline-offset-2">
+            <span class="group-hover:underline transition-all">Probar demo</span>
+          </a>
+        </article>
+      </div>
+
+      <div class="mt-6 p-6 bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+        <h3 class="font-semibold text-blue-800 dark:text-blue-300 text-lg mb-4 flex items-center gap-2">
+          <span class="text-2xl">🧪</span> Cómo probar las variantes:
+        </h3>
+        
+        <div class="space-y-4">
+          <div class="flex items-start gap-3">
+            <div class="flex-shrink-0 w-6 h-6 bg-blue-500 text-white rounded-full text-sm flex items-center justify-center font-bold mt-0.5">1</div>
+            <div class="flex-1">
+              <p class="text-sm text-blue-800 dark:text-blue-300">
+                <strong>Responsive (<code class="bg-blue-100 dark:bg-blue-800 px-1 rounded">md:flex-row</code>):</strong> 
+                Redimensiona la ventana a <strong>menos de 768px</strong> para ver <strong class="text-blue-600 dark:text-blue-400">columna</strong>, y a <strong>más de 768px</strong> para ver <strong class="text-blue-600 dark:text-blue-400">fila</strong>.
+              </p>
+            </div>
+          </div>
+          
+          <div class="flex items-start gap-3">
+            <div class="flex-shrink-0 w-6 h-6 bg-blue-500 text-white rounded-full text-sm flex items-center justify-center font-bold mt-0.5">2</div>
+            <div class="flex-1">
+              <p class="text-sm text-blue-800 dark:text-blue-300">
+                <strong>Hover effects:</strong> Pasa el cursor sobre la tarjeta para ver <strong class="text-blue-600 dark:text-blue-400">sombra</strong>, cambio de <strong class="text-blue-600 dark:text-blue-400">borde</strong> y elevación.
+              </p>
+            </div>
+          </div>
+          
+          <div class="flex items-start gap-3">
+            <div class="flex-shrink-0 w-6 h-6 bg-blue-500 text-white rounded-full text-sm flex items-center justify-center font-bold mt-0.5">3</div>
+            <div class="flex-1">
+              <p class="text-sm text-blue-800 dark:text-blue-300">
+                <strong>Focus visible:</strong> Presiona 
+                <kbd class="inline-flex items-center px-2 py-1 bg-blue-200 dark:bg-blue-700 rounded text-xs font-mono font-bold mx-1">Tab</kbd> 
+                y luego 
+                <kbd class="inline-flex items-center px-2 py-1 bg-blue-200 dark:bg-blue-700 rounded text-xs font-mono font-bold mx-1">Enter</kbd> 
+                en el botón para ver el <strong class="text-blue-600 dark:text-blue-400">anillo de foco</strong>.
+              </p>
+            </div>
+          </div>
+          
+          <div class="flex items-start gap-3">
+            <div class="flex-shrink-0 w-6 h-6 bg-blue-500 text-white rounded-full text-sm flex items-center justify-center font-bold mt-0.5">4</div>
+            <div class="flex-1">
+              <p class="text-sm text-blue-800 dark:text-blue-300">
+                <strong>Active states:</strong> Haz clic en la tarjeta (se mueve <strong class="text-blue-600 dark:text-blue-400">hacia arriba</strong>) y en el botón (en desktop se <strong class="text-blue-600 dark:text-blue-400">escala al 95%</strong>).
+              </p>
+            </div>
+          </div>
+          
+          <div class="flex items-start gap-3">
+            <div class="flex-shrink-0 w-6 h-6 bg-blue-500 text-white rounded-full text-sm flex items-center justify-center font-bold mt-0.5">5</div>
+            <div class="flex-1">
+              <p class="text-sm text-blue-800 dark:text-blue-300">
+                <strong>Dark mode:</strong> Activa el modo oscuro de tu sistema o navegador para ver los <strong class="text-blue-600 dark:text-blue-400">cambios automáticos</strong> en colores y bordes.
+              </p>
+            </div>
+          </div>
+          
+          <div class="flex items-start gap-3">
+            <div class="flex-shrink-0 w-6 h-6 bg-blue-500 text-white rounded-full text-sm flex items-center justify-center font-bold mt-0.5">6</div>
+            <div class="flex-1">
+              <p class="text-sm text-blue-800 dark:text-blue-300">
+                <strong>Group hover:</strong> Pasa el cursor sobre cualquier parte de la tarjeta para ver cómo cambia el <strong class="text-blue-600 dark:text-blue-400">color del título</strong> (efecto group-hover).
+              </p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="mt-4 p-3 bg-blue-100 dark:bg-blue-800/30 rounded border border-blue-200 dark:border-blue-700">
+          <p class="text-sm text-blue-800 dark:text-blue-300 font-medium flex items-center gap-2">
+            <span class="text-lg">💡</span>
+            <strong>Tip:</strong> Abre las herramientas de desarrollador (F12) y prueba a cambiar el tamaño de pantalla en el modo responsive.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+  
+  <script>
+    const menuBtn = document.getElementById('menu-btn');
+    const menu = document.getElementById('menu');
+
+    if (menuBtn) {
+      menuBtn.addEventListener('click', () => {
+        menu.classList.toggle('hidden');
+      });
+    }
+
+    const currentPath = window.location.pathname;
+    const navLinks = document.querySelectorAll('nav a');
+
+    navLinks.forEach(link => {
+      if (link.getAttribute('href') === currentPath) {
+        link.classList.add('font-bold', 'text-indigo-600');
+      }
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+      const card = document.querySelector('.card-interactive');
+      const cta = document.querySelector('.card-interactive-cta');
+      
+      if (card && cta) {
+        card.addEventListener('click', function(e) {
+          if (e.target !== cta && !cta.contains(e.target)) {
+            this.style.transform = 'translateY(-2px)';
+            setTimeout(() => {
+              this.style.transform = '';
+            }, 150);
+          }
+        });
+        
+        cta.addEventListener('click', function(e) {
+          e.preventDefault();
+          this.style.transform = 'scale(0.95)';
+          setTimeout(() => {
+            this.style.transform = '';
+          }, 150);
+        });
+      }
+    });
+  </script>
+</body>
+</html>
